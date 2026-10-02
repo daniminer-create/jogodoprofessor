@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Builder Tycoon</title>
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/css.css">
+  <script src="assets/java/java.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div>
+      <h1>PC BUILDER <span>TYCOON</span></h1>
+      <p>Oficina de montagem • Tutorial</p>
+    </div>
+
+    <div class="stats">
+      <div>💵 <strong id="dinheiro">R$ 2.500</strong></div>
+      <div>⭐ <strong id="xp">0 XP</strong></div>
+    </div>
+  </header>
+
+  <main class="container-fluid py-4">
+    <div class="row g-4">
+
+      <section class="col-lg-8">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Bancada de trabalho</h2>
+              <p>Monte o computador peça por peça.</p>
+            </div>
+            <span class="badge text-bg-success" id="status">
+              Gabinete vazio
+            </span>
+          </div>
+
+          <div class="workbench">
+            <div class="pc-case">
+              <div class="case-top">
+                <span>GAMER CASE</span>
+                <span class="power-light"></span>
+              </div>
+
+              <div class="case-interior">
+                <div class="motherboard" id="motherboard">
+
+                  <div class="board-label">MOTHERBOARD</div>
+
+                  <div class="cpu-area">
+                    <div class="component-label">CPU SOCKET</div>
+                    <button class="cpu-socket component"
+                            id="cpuSocket"
+                            data-part="cpu"
+                            disabled
+                            aria-label="Instalar processador">
+                      <span id="cpuText">SOCKET</span>
+                    </button>
+                  </div>
+
+                  <div class="cooler-area">
+                    <div class="component-label">CPU COOLER</div>
+                    <button class="cooler component"
+                            id="cooler"
+                            data-part="cooler"
+                            disabled
+                            aria-label="Instalar cooler">
+                      <span class="fan-blades">✣</span>
+                      <span id="coolerText">COOLER</span>
+                    </button>
+                  </div>
+
+                  <div class="ram-area">
+                    <div class="component-label">MEMORY / RAM</div>
+                    <div class="ram-slots">
+                      <button class="ram-slot component"
+                              data-part="ram"
+                              disabled>DIMM 1</button>
+                      <button class="ram-slot component"
+                              data-part="ram"
+                              disabled>DIMM 2</button>
+                      <button class="ram-slot component"
+                              data-part="ram"
+                              disabled>DIMM 3</button>
+                      <button class="ram-slot component"
+                              data-part="ram"
+                              disabled>DIMM 4</button>
+                    </div>
+                  </div>
+
+                  <div class="pcie-area">
+                    <div class="component-label">PCI EXPRESS</div>
+                    <button class="pcie-slot component"
+                            data-part="gpu"
+                            disabled>
+                      PCIe x16 — PLACA DE VÍDEO
+                    </button>
+                    <div class="pcie-short"></div>
+                    <div class="pcie-short"></div>
+                  </div>
+
+                  <div class="sata-area">
+                    <div class="component-label">SATA PORTS</div>
+                    <div class="sata-ports">
+                      <button class="sata-port component" id="sataPort"
+                              disabled aria-label="Conectar cabo SATA">
+                        SATA 1
+                      </button>
+                      <span>SATA 2</span>
+                      <span>SATA 3</span>
+                      <span>SATA 4</span>
+                    </div>
+                  </div>
+
+                  <div class="board-screws screw-one"></div>
+                  <div class="board-screws screw-two"></div>
+                  <div class="board-screws screw-three"></div>
+                  <div class="board-screws screw-four"></div>
+                </div>
+
+                <div class="empty-board" id="emptyBoard">
+                  <div class="board-outline">
+                    <span>ÁREA DA PLACA-MÃE</span>
+                    <small>Instale a placa-mãe aqui</small>
+                    <button id="installMotherboard" class="install-button">
+                      + Instalar placa-mãe
+                    </button>
+                  </div>
+                </div>
+
+                <div class="component-bays">
+                  <button class="psu-bay component" id="psuBay" disabled
+                          aria-label="Instalar fonte de alimentação">
+                    <span class="psu-fan">✣</span>
+                    <strong id="psuLabel">FONTE</strong>
+                    <small>Compartimento da fonte</small>
+                  </button>
+                  <button class="drive-bay component" id="driveBay" disabled
+                          aria-label="Instalar HD">
+                    <strong id="driveLabel">BAIA DO HD</strong>
+                    <span class="drive-icon">▰</span>
+                    <small>HD 3,5"</small>
+                  </button>
+                </div>
+
+                <svg class="sata-cable" id="sataCable" viewBox="0 0 560 410"
+                     preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M 390 355 C 410 355, 410 330, 430 330 L 455 330" />
+                </svg>
+
+                <div class="case-cables">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+
+              <div class="case-bottom">
+                <span>POWER</span>
+                <span>USB 3.0</span>
+                <span>AUDIO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tutorial-box">
+            <div class="tutorial-icon">🔧</div>
+            <div>
+              <span class="tutorial-step" id="stepCounter">
+                ETAPA 1 DE 8
+              </span>
+              <h3 id="tutorialTitle">Instale a placa-mãe</h3>
+              <p id="tutorialText">
+                Encaixe a placa-mãe nos pontos de fixação do gabinete.
+                Os componentes da placa aparecerão depois da instalação.
+              </p>
+              <button id="startMaintenance" class="install-button" hidden>
+                Iniciar manutenção preventiva
+              </button>
+            </div>
+          </div>
+
+          <section class="maintenance-panel" id="maintenancePanel" hidden
+                   aria-labelledby="maintenanceHeading">
+            <div class="panel-header">
+              <div>
+                <h2 id="maintenanceHeading">Limpeza e manutenção preventiva</h2>
+                <p>Avance com cuidado; cada etapa depende da anterior.</p>
+              </div>
+              <span class="badge text-bg-success" id="maintenanceStep">
+                ETAPA 1 DE 11
+              </span>
+            </div>
+
+            <div class="maintenance-progress">
+              <div class="progress-label">
+                <span>Progresso da manutenção</span>
+                <strong id="maintenanceProgressText">0%</strong>
+              </div>
+              <div class="progress" role="progressbar"
+                   aria-label="Progresso da manutenção">
+                <div class="progress-bar" id="maintenanceProgressBar"
+                     style="width: 0%"></div>
+              </div>
+            </div>
+
+            <h3 id="maintenanceTitle">Preparar o computador</h3>
+            <p class="maintenance-instructions" id="maintenanceInstructions"></p>
+            <div class="maintenance-alert" id="maintenanceFeedback"
+                 role="status" aria-live="polite"></div>
+
+            <div class="tool-picker" id="toolPicker" aria-label="Ferramentas">
+              <button type="button" class="tool-button" data-tool="eraser">
+                Borracha branca macia
+              </button>
+              <button type="button" class="tool-button" data-tool="brush">
+                Pincel antiestático
+              </button>
+              <button type="button" class="tool-button" data-tool="alcohol">
+                Álcool isopropílico
+              </button>
+              <button type="button" class="tool-button" data-tool="cloth">
+                Pano sem fiapos
+              </button>
+              <button type="button" class="tool-button" data-tool="contact">
+                Limpa-contato eletrônico
+              </button>
+              <button type="button" class="tool-button" data-tool="paste">
+                Pasta térmica
+              </button>
+            </div>
+
+            <div class="maintenance-workspace" id="maintenanceWorkspace"></div>
+            <button type="button" id="maintenanceAction"
+                    class="install-button" hidden></button>
+          </section>
+
+          <section class="maintenance-completion" id="maintenanceCompletion"
+                   hidden aria-live="polite">
+            <div class="tutorial-icon">✓</div>
+            <h2>Manutenção preventiva concluída!</h2>
+            <p id="maintenanceSummary"></p>
+            <div class="maintenance-results" id="maintenanceResults"></div>
+            <button type="button" id="maintenanceRestart" class="reset-button">
+              Reiniciar manutenção
+            </button>
+          </section>
+        </div>
+      </section>
+
+      <aside class="col-lg-4">
+        <div class="panel parts-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Componentes internos</h2>
+              <p>Peças disponíveis para montagem</p>
+            </div>
+          </div>
+
+          <div class="part-card" id="part-motherboard">
+            <div class="part-icon motherboard-icon">▦</div>
+            <div class="part-info">
+              <strong>Placa-mãe</strong>
+              <small>Micro-ATX • AM4</small>
+              <span class="part-status" id="motherboardStatus">
+                Aguardando instalação
+              </span>
+            </div>
+            <button class="part-button" id="motherboardButton">
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-cpu">
+            <div class="part-icon cpu-icon">▦</div>
+            <div class="part-info">
+              <strong>Processador</strong>
+              <small>CPU • AM4</small>
+              <span class="part-status" id="cpuStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="cpu" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-cooler">
+            <div class="part-icon cooler-icon">✣</div>
+            <div class="part-info">
+              <strong>Cooler do processador</strong>
+              <small>Air cooler</small>
+              <span class="part-status" id="coolerStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="cooler" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-ram">
+            <div class="part-icon ram-icon">▤</div>
+            <div class="part-info">
+              <strong>Memória RAM</strong>
+              <small>2 × 8 GB DDR4</small>
+              <span class="part-status" id="ramStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="ram" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-gpu">
+            <div class="part-icon gpu-icon">▰</div>
+            <div class="part-info">
+              <strong>Placa de vídeo</strong>
+              <small>GPU • PCIe x16</small>
+              <span class="part-status" id="gpuStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="gpu" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-psu">
+            <div class="part-icon psu-icon">ϟ</div>
+            <div class="part-info">
+              <strong>Fonte de alimentação</strong>
+              <small>PSU • 650 W</small>
+              <span class="part-status" id="psuStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="psu" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-hdd">
+            <div class="part-icon hdd-icon">▰</div>
+            <div class="part-info">
+              <strong>HD</strong>
+              <small>Armazenamento • 1 TB</small>
+              <span class="part-status" id="hddStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="hdd" disabled>
+              Instalar
+            </button>
+          </div>
+
+          <div class="part-card locked" id="part-sata">
+            <div class="part-icon sata-icon">⌁</div>
+            <div class="part-info">
+              <strong>Cabo SATA</strong>
+              <small>Conexão do HD à placa-mãe</small>
+              <span class="part-status" id="sataStatus">Bloqueado</span>
+            </div>
+            <button class="part-button" data-install="sata" disabled>
+              Conectar
+            </button>
+          </div>
+
+          <div class="progress-area">
+            <div class="progress-label">
+              <span>Progresso da montagem</span>
+              <strong id="progressText">0%</strong>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" id="progressBar"
+                   role="progressbar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <button id="resetButton" class="reset-button">
+            Reiniciar montagem
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast-message" id="toast"></div>
+
+  <script src="assets/java/manutencao.js" defer></script>
+</body>
+</html>

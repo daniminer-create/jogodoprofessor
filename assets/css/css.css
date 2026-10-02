@@ -1,0 +1,1785 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #080d16;
+  --panel: #111a29;
+  --panel-light: #182438;
+  --border: #293951;
+  --text: #eaf2ff;
+  --muted: #8495ad;
+  --green: #53f0a5;
+  --blue: #55a7ff;
+  --orange: #ffad55;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 20% 0%, #14243a 0, transparent 45%),
+    var(--bg);
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 5%;
+  border-bottom: 1px solid var(--border);
+  background: #0b121e;
+}
+
+.topbar h1 {
+  margin: 0;
+  font: 800 1.35rem 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.topbar h1 span {
+  color: var(--green);
+}
+
+.topbar p,
+.panel-header p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.stats {
+  display: flex;
+  gap: 22px;
+  font-size: 0.9rem;
+}
+
+.stats strong {
+  color: var(--green);
+}
+
+.panel {
+  height: 100%;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #121d2e, #0d1522);
+  box-shadow: 0 18px 50px #0003;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.workbench {
+  display: grid;
+  place-items: center;
+  min-height: 520px;
+  padding: 25px 10px;
+  overflow: hidden;
+  border: 1px solid #25344a;
+  border-radius: 14px;
+  background:
+    linear-gradient(#ffffff06 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff06 1px, transparent 1px),
+    #080e18;
+  background-size: 24px 24px;
+}
+
+/* Gabinete */
+
+.pc-case {
+  position: relative;
+  width: min(100%, 590px);
+  padding: 12px;
+  border: 3px solid #45536a;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #313d50, #131c2a 35%, #222e40);
+  box-shadow:
+    0 20px 40px #0009,
+    inset 0 0 0 2px #ffffff0a;
+}
+
+.case-top,
+.case-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  color: #8798af;
+  font: 10px 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.power-light {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.case-interior {
+  position: relative;
+  min-height: 410px;
+  overflow: hidden;
+  border: 2px solid #05080e;
+  border-radius: 5px;
+  background:
+    radial-gradient(circle at 50% 40%, #1c2b40, #0a101a 75%);
+}
+
+/* Área onde a placa-mãe será instalada */
+
+.empty-board {
+  position: absolute;
+  inset: 16px 145px 16px 15px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed #53647a;
+  border-radius: 5px;
+  background: #111b2b88;
+  transition: opacity 0.3s;
+}
+
+.board-outline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  text-align: center;
+}
+
+.board-outline span {
+  color: #dce8fa;
+  font: 700 12px 'Orbitron', sans-serif;
+}
+
+.board-outline small {
+  color: var(--muted);
+}
+
+.install-button,
+.part-button {
+  padding: 9px 12px;
+  border: 1px solid #398b69;
+  border-radius: 8px;
+  color: #07160f;
+  background: var(--green);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.install-button:hover,
+.part-button:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+/* Placa-mãe */
+
+.motherboard {
+  position: absolute;
+  inset: 16px 145px 16px 15px;
+  display: none;
+  overflow: hidden;
+  border: 3px solid #37684e;
+  border-radius: 5px;
+  background:
+    radial-gradient(circle at 20% 20%, #28543e, transparent 45%),
+    linear-gradient(135deg, #163b2b, #0b211b 70%);
+  box-shadow: inset 0 0 0 4px #07150f;
+}
+
+.motherboard.installed {
+  display: block;
+  animation: boardAppear 0.45s ease-out;
+}
+
+@keyframes boardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.board-label {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  color: #9ac9a9;
+  font: 700 9px 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Trilhas decorativas da placa */
+
+.motherboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background:
+    linear-gradient(90deg, transparent 49%, #74a789 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, #74a789 50%, transparent 51%);
+  background-size: 42px 42px;
+  pointer-events: none;
+}
+
+.component-label {
+  margin-bottom: 5px;
+  color: #b2cdbb;
+  font: 700 8px 'Orbitron', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Socket do processador */
+
+.cpu-area {
+  position: absolute;
+  top: 37px;
+  left: 15px;
+  z-index: 2;
+}
+
+.cpu-socket {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border: 5px solid #8b9a9e;
+  border-radius: 5px;
+  color: #18212a;
+  background:
+    repeating-linear-gradient(0deg, #d5d7cc 0 3px, #aab1ad 3px 5px);
+  box-shadow: inset 0 0 0 4px #56656a;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.cpu-socket:not(:disabled) {
+  cursor: pointer;
+}
+
+.cpu-socket.installed {
+  border-color: #e3b46c;
+  background: linear-gradient(135deg, #e9d9a6, #a58a55);
+}
+
+.cpu-socket.installed span {
+  padding: 15px 8px;
+  border: 2px solid #e8d9a4;
+  background: #777b63;
+  color: white;
+}
+
+/* Cooler fica por cima do processador */
+
+.cooler-area {
+  position: absolute;
+  top: 35px;
+  left: 116px;
+  z-index: 3;
+}
+
+.cooler {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 75px;
+  height: 91px;
+  border: 3px solid #8a99a9;
+  border-radius: 6px;
+  color: #dce8f7;
+  background: repeating-linear-gradient(
+    90deg, #354458 0 5px, #536477 5px 8px
+  );
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.fan-blades {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  border: 3px solid #94a7b9;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1b2635 0 20%, #43546a 22% 100%);
+  color: var(--blue);
+  font-size: 28px;
+}
+
+.cooler.installed {
+  border-color: var(--green);
+  background: repeating-linear-gradient(
+    90deg, #263e37 0 5px, #375e4c 5px 8px
+  );
+}
+
+/* Slots de memória RAM */
+
+.ram-area {
+  position: absolute;
+  top: 35px;
+  right: 9px;
+  z-index: 2;
+}
+
+.ram-slots {
+  display: flex;
+  gap: 4px;
+}
+
+.ram-slot {
+  width: 13px;
+  height: 100px;
+  padding: 0;
+  border: 1px solid #8292a1;
+  border-radius: 2px;
+  color: transparent;
+  background: #202c3a;
+  writing-mode: vertical-rl;
+  font-size: 7px;
+}
+
+.ram-slot.installed {
+  border-color: #a5e9ba;
+  background: linear-gradient(90deg, #185b3b, #35b86f, #17462f);
+  box-shadow: 0 0 8px #53f0a544;
+}
+
+.ram-slot:not(:disabled) {
+  cursor: pointer;
+}
+
+/* PCIe */
+
+.pcie-area {
+  position: absolute;
+  right: 8px;
+  bottom: 45px;
+  left: 15px;
+  z-index: 2;
+}
+
+.pcie-slot {
+  width: 100%;
+  height: 19px;
+  padding: 2px 4px;
+  border: 2px solid #a4aeb5;
+  border-radius: 3px;
+  color: #d6dce5;
+  background: #222d3b;
+  text-align: left;
+  font-size: 7px;
+}
+
+.pcie-slot.installed {
+  border-color: #e0bd73;
+  background: linear-gradient(90deg, #45443b, #9d834c, #45443b);
+  color: white;
+}
+
+.pcie-short {
+  width: 55%;
+  height: 8px;
+  margin-top: 5px;
+  border: 1px solid #72808d;
+  background: #273443;
+}
+
+/* Portas SATA */
+
+.sata-area {
+  position: absolute;
+  right: 9px;
+  bottom: 8px;
+  z-index: 2;
+}
+
+.sata-ports {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.sata-ports span,
+.sata-ports button {
+  padding: 4px;
+  border: 1px solid #9b8a55;
+  border-radius: 2px;
+  color: #e9d79b;
+  background: #303021;
+  font-size: 7px;
+}
+
+.sata-ports span {
+  display: block;
+}
+
+.sata-ports .sata-port:not(:disabled) {
+  border-color: #55a7ff;
+  cursor: pointer;
+}
+
+.sata-ports .sata-port.installed {
+  border-color: #53f0a5;
+  color: var(--green);
+  background: #123325;
+}
+
+/* Parafusos */
+
+.board-screws {
+  position: absolute;
+  z-index: 4;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #a5b0b7;
+  border-radius: 50%;
+  background: #39434c;
+}
+
+.screw-one { top: 5px; right: 5px; }
+.screw-two { bottom: 5px; right: 5px; }
+.screw-three { bottom: 5px; left: 5px; }
+.screw-four { top: 5px; left: 5px; }
+
+/* Compartimentos da fonte e do HD, separados da placa-mãe */
+
+.component-bays {
+  position: absolute;
+  top: 16px;
+  right: 10px;
+  bottom: 16px;
+  z-index: 3;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  width: 120px;
+}
+
+.psu-bay,
+.drive-bay {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 6px;
+  border: 2px solid #46546a;
+  border-radius: 5px;
+  color: #b5c4d7;
+  background: linear-gradient(145deg, #202d40, #0e1623);
+  text-align: center;
+  cursor: not-allowed;
+}
+
+.psu-bay:not(:disabled),
+.drive-bay:not(:disabled) {
+  border-color: #55a7ff;
+  cursor: pointer;
+}
+
+.psu-bay.installed,
+.drive-bay.installed {
+  border-color: #347c5b;
+  background: linear-gradient(145deg, #173d2d, #0e211a);
+}
+
+.psu-bay strong,
+.drive-bay strong {
+  font: 700 11px 'Orbitron', sans-serif;
+}
+
+.psu-bay small,
+.drive-bay small {
+  padding: 0 3px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.psu-fan {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #63758a;
+  border-radius: 50%;
+  color: var(--blue);
+  background: repeating-conic-gradient(
+    #293a50 0deg 25deg, #1a2739 25deg 45deg
+  );
+  font-size: 38px;
+}
+
+.psu-bay.installed .psu-fan {
+  border-color: #53f0a5;
+  color: var(--green);
+}
+
+.drive-icon {
+  display: grid;
+  width: 56px;
+  height: 30px;
+  place-items: center;
+  border: 2px solid #63758a;
+  border-radius: 4px;
+  color: #aebed1;
+  background: #182438;
+  font-size: 20px;
+}
+
+.drive-bay.installed .drive-icon {
+  border-color: #53f0a5;
+  color: var(--green);
+}
+
+.sata-cable {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sata-cable.installed {
+  display: block;
+}
+
+.sata-cable path {
+  fill: none;
+  stroke: #55a7ff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 3px #55a7ff99);
+}
+
+.case-cables {
+  position: absolute;
+  right: 128px;
+  bottom: 5px;
+  display: flex;
+  gap: 5px;
+}
+
+.case-cables span {
+  width: 4px;
+  height: 25px;
+  border-radius: 5px;
+  background: #b44e4e;
+}
+
+.case-cables span:nth-child(2) {
+  background: #d8c15d;
+}
+
+.case-cables span:nth-child(3) {
+  background: #5a94d8;
+}
+
+/* Tutorial */
+
+.tutorial-box {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 17px;
+  border: 1px solid #2a4561;
+  border-radius: 12px;
+  background: #101e30;
+}
+
+.tutorial-icon {
+  display: grid;
+  flex: 0 0 43px;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 10px;
+  background: #203b53;
+  font-size: 21px;
+}
+
+.tutorial-step {
+  color: var(--green);
+  font: 700 0.7rem 'Orbitron', sans-serif;
+}
+
+.tutorial-box h3 {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+.tutorial-box p {
+  margin: 0;
+  color: #a5b4c8;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+/* Lista de peças */
+
+.parts-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.parts-panel .panel-header {
+  margin-bottom: 5px;
+}
+
+.part-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #2a3a50;
+  border-radius: 11px;
+  background: #111c2b;
+  transition: 0.2s;
+}
+
+.part-card.completed {
+  border-color: #347c5b;
+  background: #10271f;
+}
+
+.part-card.locked {
+  opacity: 0.45;
+}
+
+.part-icon {
+  display: grid;
+  flex: 0 0 42px;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  background: #23354b;
+  font-size: 22px;
+}
+
+.motherboard-icon { color: #6de5a3; }
+.cpu-icon { color: #f0c56b; }
+.cooler-icon { color: #6ab9ff; }
+.ram-icon { color: #c5a4ff; }
+.gpu-icon { color: #ffad75; }
+.psu-icon { color: #ffe082; }
+.hdd-icon { color: #8de1db; }
+.sata-icon { color: #82bdff; }
+
+.part-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 3px;
+}
+
+.part-info strong {
+  font-size: 0.82rem;
+}
+
+.part-info small {
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.part-status {
+  color: #91a3ba;
+  font-size: 0.68rem;
+}
+
+.part-card.completed .part-status {
+  color: var(--green);
+}
+
+.part-button {
+  flex-shrink: 0;
+  padding: 8px 10px;
+}
+
+.part-button:disabled {
+  border-color: #354255;
+  color: #6d7a8d;
+  background: #202b3a;
+  cursor: not-allowed;
+}
+
+.progress-area {
+  margin-top: 12px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #b8c6d8;
+  font-size: 0.78rem;
+}
+
+.progress-label strong {
+  color: var(--green);
+}
+
+.progress {
+  height: 8px;
+  background: #263347;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #2cae74, #65f2aa);
+  transition: width 0.35s;
+}
+
+.reset-button {
+  padding: 10px;
+  border: 1px solid #3a4b62;
+  border-radius: 8px;
+  color: #aebed1;
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  border-color: #f08b8b;
+  color: #f08b8b;
+}
+
+.toast-message {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+  max-width: calc(100vw - 40px);
+  padding: 13px 18px;
+  border: 1px solid #398b69;
+  border-radius: 10px;
+  color: #e7fff1;
+  background: #123325;
+  box-shadow: 0 10px 30px #0005;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: 0.25s;
+}
+
+.toast-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.maintenance-panel,
+.maintenance-completion {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #2a4561;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #101e30, #0b1522);
+}
+
+.maintenance-panel .panel-header {
+  margin-bottom: 14px;
+}
+
+.maintenance-panel h3,
+.maintenance-completion h2 {
+  margin: 17px 0 7px;
+  font-size: 1.05rem;
+}
+
+.maintenance-instructions,
+.surface-legend,
+.lesson-note span,
+.surface-caption small {
+  color: #a5b4c8;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.maintenance-progress,
+.clean-meter {
+  margin: 12px 0;
+}
+
+.maintenance-alert {
+  min-height: 3.5rem;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid #2f654e;
+  border-radius: 8px;
+  color: #c7f8dd;
+  background: #112c21;
+  font-size: 0.82rem;
+}
+
+.maintenance-alert.warning {
+  border-color: #936436;
+  color: #ffe0b7;
+  background: #382819;
+}
+
+.tool-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 12px 0;
+}
+
+.tool-button,
+.face-controls button {
+  padding: 8px 10px;
+  border: 1px solid #354963;
+  border-radius: 8px;
+  color: #b8c6d8;
+  background: #172438;
+  font-size: 0.73rem;
+  cursor: pointer;
+}
+
+.tool-button.selected,
+.face-controls button.selected {
+  border-color: var(--green);
+  color: #07160f;
+  background: var(--green);
+}
+
+.tool-button:hover:not(.selected),
+.face-controls button:hover:not(:disabled):not(.selected) {
+  border-color: var(--blue);
+  color: #eaf2ff;
+}
+
+.maintenance-workspace {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 14px 0;
+}
+
+.maintenance-workspace .install-button {
+  justify-self: start;
+}
+
+.safety-sequence,
+.reinstall-workflow {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.7fr) minmax(0, 1.3fr);
+  gap: 14px;
+}
+
+.safety-visual {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid #354963;
+  border-radius: 10px;
+  background: #111c2b;
+  text-align: center;
+}
+
+.safety-visual small,
+.safety-button small,
+.connector-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.power-symbol {
+  color: var(--orange);
+  font-size: 2.6rem;
+}
+
+.safety-controls {
+  display: grid;
+  gap: 8px;
+}
+
+.safety-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #354963;
+  border-radius: 9px;
+  color: var(--text);
+  background: #111c2b;
+  text-align: left;
+  cursor: pointer;
+}
+
+.safety-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.safety-button.done {
+  border-color: #347c5b;
+  background: #10271f;
+}
+
+.safety-button > span:first-child {
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--green);
+  background: #203b34;
+}
+
+.lesson-note {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--orange);
+  border-radius: 4px;
+  background: #1b2230;
+  font-size: 0.82rem;
+}
+
+.lesson-note strong {
+  color: #ffd394;
+}
+
+.ram-module {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #354963;
+  border-radius: 10px;
+  background: #0c1521;
+}
+
+.ram-label,
+.cpu-package-label,
+.cooler-view-label,
+.surface-caption > span {
+  color: #dce8fa;
+  font: 700 0.75rem 'Orbitron', sans-serif;
+}
+
+.ram-board {
+  display: grid;
+  width: min(100%, 420px);
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid #4e9b6e;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #17563c, #0e3929);
+}
+
+.ram-chip {
+  justify-self: center;
+  padding: 5px 15px;
+  border: 1px solid #81909b;
+  border-radius: 3px;
+  color: #dce8fa;
+  background: #202a35;
+  font-size: 0.65rem;
+}
+
+.ram-gold-contacts {
+  display: grid;
+  position: relative;
+  width: 100%;
+  height: 55px;
+  overflow: hidden;
+  border: 1px solid #caab55;
+  background: repeating-linear-gradient(90deg, #c8a84b 0 7px, #f1d77b 7px 10px);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.direction-arrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: #b8c6d8;
+  font-size: 0.7rem;
+}
+
+.direction-arrow b {
+  color: var(--green);
+  font-size: 0.66rem;
+}
+
+.clean-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: crosshair;
+}
+
+.dirt-grid,
+.paste-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  pointer-events: none;
+}
+
+.dirt-cell {
+  display: block;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 45% 55%, #3d332b 0 16%, transparent 60%),
+    radial-gradient(circle at 70% 25%, #97856c 0 8%, transparent 36%);
+  transition: opacity 0.16s, transform 0.16s;
+}
+
+.dirt-cell.dirty {
+  opacity: calc(var(--dirt) * 0.4);
+}
+
+.ram-gold-contacts .dirt-grid {
+  z-index: 5;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+}
+
+.ram-gold-contacts .dirt-cell {
+  background:
+    radial-gradient(ellipse at center, #302821 0 22%, transparent 65%),
+    radial-gradient(circle, #6b5140 0 9%, transparent 42%);
+}
+
+.clean-meter > div:first-child,
+.clean-meter .progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  color: #b8c6d8;
+  font-size: 0.76rem;
+}
+
+.clean-meter strong {
+  color: var(--green);
+}
+
+.remaining-regions {
+  margin: 7px 0;
+  color: #c0cde0;
+  font-size: 0.76rem;
+}
+
+.care-tips {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #d6dfec;
+  font-size: 0.76rem;
+}
+
+.component-cleaning,
+.board-cleaning,
+.thermal-lesson,
+.cooler-explorer {
+  display: grid;
+  gap: 10px;
+}
+
+.surface-caption {
+  display: grid;
+  gap: 4px;
+}
+
+.cpu-surface,
+.cooler-base-surface {
+  width: min(100%, 410px);
+  aspect-ratio: 1.5;
+  justify-self: center;
+  border: 7px solid #6d7983;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ddd8c7, #a5adac);
+}
+
+.cpu-illustration,
+.cooler-base-art {
+  position: absolute;
+  inset: 12%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 5px;
+  border: 5px solid #9ba49f;
+  color: #303d42;
+  background: linear-gradient(135deg, #d5d8cc, #abb7b2);
+  font: 700 1.1rem 'Orbitron', sans-serif;
+}
+
+.cpu-illustration small {
+  font: 600 0.55rem 'Inter', sans-serif;
+}
+
+.cooler-base-art i {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #6a7780;
+  border-radius: 50%;
+}
+
+.surface-legend {
+  margin: 0;
+  font-size: 0.74rem;
+}
+
+.drying-card {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 24px;
+  border: 1px solid #354963;
+  border-radius: 10px;
+  background: #101c2b;
+  text-align: center;
+}
+
+.drying-card p {
+  max-width: 460px;
+  margin: 0;
+  color: #a5b4c8;
+  font-size: 0.83rem;
+}
+
+.drying-icon {
+  color: var(--blue);
+  font-size: 3rem;
+}
+
+.dry-countdown {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.motherboard-lesson {
+  width: min(100%, 620px);
+  aspect-ratio: 1.65;
+  justify-self: center;
+  border: 5px solid #37684e;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent 49%, #74a78955 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, #74a78955 50%, transparent 51%),
+    linear-gradient(135deg, #163b2b, #0b211b 70%);
+  background-size: 42px 42px, 42px 42px, auto;
+}
+
+.board-part {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  min-height: 20px;
+  place-items: center;
+  padding: 4px;
+  border: 1px solid #a2b6a8;
+  border-radius: 3px;
+  color: #d4e2d5;
+  background: #152d24;
+  font: 700 0.52rem 'Orbitron', sans-serif;
+  pointer-events: none;
+}
+
+.socket-part { top: 25%; left: 23%; width: 22%; height: 32%; }
+.ram-part { top: 15%; right: 12%; width: 13%; height: 62%; writing-mode: vertical-rl; }
+.heatsink-part { top: 18%; left: 5%; width: 13%; height: 55%; writing-mode: vertical-rl; }
+.pcie-part { bottom: 20%; left: 19%; width: 58%; }
+.sata-part { right: 5%; bottom: 8%; width: 16%; }
+.connector-part { left: 5%; bottom: 6%; width: 28%; }
+
+.dust-regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dust-regions span {
+  padding: 4px 7px;
+  border: 1px solid #354963;
+  border-radius: 20px;
+  color: #c0cde0;
+  font-size: 0.66rem;
+}
+
+.cooler-explorer {
+  justify-items: center;
+}
+
+.face-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.face-controls button {
+  padding: 6px 9px;
+  text-transform: capitalize;
+}
+
+.face-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cooler-view-label {
+  color: var(--green);
+}
+
+.cooler-model {
+  position: relative;
+  display: flex;
+  width: min(100%, 440px);
+  min-height: 190px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  overflow: hidden;
+  border: 2px solid #46546a;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #1b2a3d, #0c1521);
+}
+
+.fan-frame {
+  display: grid;
+  width: 120px;
+  height: 120px;
+  flex: 0 0 120px;
+  place-items: center;
+  border: 8px solid #8292a1;
+  border-radius: 12px;
+  background: #27374a;
+}
+
+.fan-blades-static {
+  display: grid;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  border: 5px solid #9cabb8;
+  border-radius: 50%;
+  color: #72b7ff;
+  background: radial-gradient(circle, #a8b5bf 0 14%, #3b4b5d 16% 100%);
+  font-size: 3rem;
+}
+
+.heatsink-fins {
+  display: flex;
+  height: 135px;
+  gap: 4px;
+  align-items: center;
+}
+
+.heatsink-fins i {
+  width: 9px;
+  height: 100%;
+  border: 1px solid #91a0ac;
+  background: linear-gradient(90deg, #4a5b6b, #a2adb4, #4a5b6b);
+}
+
+.cooler-model.fin-view .heatsink-fins {
+  height: 90px;
+  transform: rotate(90deg);
+}
+
+.cooler-model.fin-view .fan-frame {
+  width: 78px;
+  height: 78px;
+  flex-basis: 78px;
+}
+
+.cooler-model.fin-view .fan-blades-static {
+  width: 54px;
+  height: 54px;
+  font-size: 2rem;
+}
+
+.cooler-face-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+}
+
+.cooler-face-surface .dirt-cell {
+  background:
+    radial-gradient(ellipse at center, #675747 0 12%, transparent 58%),
+    radial-gradient(circle, #a18e72 0 8%, transparent 42%);
+}
+
+.thermal-lesson {
+  justify-items: center;
+}
+
+.profile-select {
+  display: grid;
+  width: min(100%, 400px);
+  gap: 5px;
+  color: #c0cde0;
+  font-size: 0.75rem;
+}
+
+.profile-select select {
+  padding: 8px;
+  border: 1px solid #354963;
+  border-radius: 7px;
+  color: var(--text);
+  background: #111c2b;
+}
+
+.cpu-package {
+  position: relative;
+  display: grid;
+  width: min(100%, 440px);
+  aspect-ratio: 1.55;
+  place-items: center;
+  border: 10px solid #7c8b8f;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #cfd5cd, #929f9d);
+}
+
+.cpu-package-label {
+  justify-self: center;
+  color: #455359;
+  font: 700 0.75rem 'Orbitron', sans-serif;
+}
+
+.paste-grid {
+  z-index: 3;
+}
+
+.paste-cell {
+  margin: -1px;
+  border-radius: 45% 55% 48% 52%;
+  opacity: 0;
+  background-color: #368ddd;
+  background:
+    radial-gradient(ellipse at 34% 32%, #d6efff 0 7%, transparent 30%),
+    radial-gradient(ellipse at 52% 54%, #69b9ff 0 27%, #368ddd 58%, #2364a5 82%);
+  background-color: #368ddd;
+  pointer-events: none;
+  transform: scale(0.72);
+  transition: opacity 0.12s, transform 0.12s;
+}
+
+.paste-cell.pasted {
+  opacity: 1;
+  filter: saturate(calc(0.75 + var(--paste) * 0.08));
+  transform: scale(1.08);
+}
+
+.paste-cell.overflow {
+  outline: 2px solid #ff6a57;
+  background: radial-gradient(ellipse, #ff9a87 0 15%, #ff7966 40%, #c82f2f 78%);
+  background-color: #c82f2f;
+}
+
+.paste-cell.edge-cell.pasted {
+  outline: 2px solid #ff5545;
+  background:
+    radial-gradient(ellipse at 34% 32%, #ffd6cc 0 7%, transparent 30%),
+    radial-gradient(ellipse, #ff7966 0 35%, #e64138 78%);
+  background-color: #e64138;
+}
+
+.paste-metrics {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.paste-metrics > div {
+  min-width: 0;
+}
+
+.paste-metrics .clean-meter {
+  margin: 0;
+}
+
+.connector-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #354963;
+  border-radius: 10px;
+  background: #111c2b;
+}
+
+.connector-surface {
+  width: min(100%, 300px);
+  height: 90px;
+  border: 2px solid #52677c;
+  border-radius: 8px;
+  background: repeating-linear-gradient(90deg, #263c51 0 22px, #a08b52 22px 27px);
+}
+
+.reinstall-checks {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  color: #b8c6d8;
+  font-size: 0.8rem;
+}
+
+.cooler-removal-card {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #354963;
+  border-radius: 10px;
+  background: #111c2b;
+}
+
+.removal-model {
+  min-height: 160px;
+}
+
+.cooler-removal-card p {
+  margin: 0;
+  color: #b8c6d8;
+  font-size: 0.8rem;
+}
+
+.removal-status {
+  color: var(--green);
+  font-size: 0.78rem;
+}
+
+.final-inspection {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.7fr) minmax(0, 1.3fr);
+  gap: 14px;
+}
+
+.inspection-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inspection-list li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: #ffc88e;
+  background: #2c2119;
+  font-size: 0.75rem;
+}
+
+.inspection-list li.passed {
+  color: #b9f4d1;
+  background: #10271f;
+}
+
+.maintenance-completion {
+  text-align: center;
+}
+
+.maintenance-completion .tutorial-icon {
+  margin: auto;
+  color: var(--green);
+}
+
+.maintenance-completion > p {
+  color: #b8c6d8;
+  line-height: 1.6;
+}
+
+.maintenance-results {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.maintenance-results > div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 5px;
+  border: 1px solid #354963;
+  border-radius: 8px;
+  background: #111c2b;
+}
+
+.maintenance-results strong {
+  color: var(--green);
+}
+
+.maintenance-results span {
+  color: #a5b4c8;
+  font-size: 0.68rem;
+}
+
+.maintenance-results p {
+  grid-column: 1 / -1;
+  margin: 8px 0;
+  color: #c0cde0;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats {
+    gap: 15px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .workbench {
+    min-height: 400px;
+    padding: 12px 4px;
+  }
+
+  .pc-case {
+    padding: 7px;
+  }
+
+  .case-interior {
+    min-height: 320px;
+  }
+
+  .empty-board,
+  .motherboard {
+    right: 100px;
+    left: 8px;
+    top: 10px;
+    bottom: 10px;
+  }
+
+  .component-bays {
+    right: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 84px;
+  }
+
+  .psu-fan {
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+  }
+
+  .psu-bay strong,
+  .drive-bay strong {
+    font-size: 8px;
+  }
+
+  .psu-bay small,
+  .drive-bay small {
+    font-size: 6px;
+  }
+
+  .drive-icon {
+    width: 40px;
+    height: 24px;
+    font-size: 15px;
+  }
+
+  .cpu-area {
+    top: 30px;
+    left: 8px;
+  }
+
+  .cpu-socket {
+    width: 60px;
+    height: 60px;
+    font-size: 8px;
+  }
+
+  .cooler-area {
+    top: 30px;
+    left: 77px;
+  }
+
+  .cooler {
+    width: 50px;
+    height: 65px;
+  }
+
+  .fan-blades {
+    width: 32px;
+    height: 32px;
+    font-size: 21px;
+  }
+
+  .ram-area {
+    top: 30px;
+    right: 5px;
+  }
+
+  .ram-slot {
+    width: 8px;
+    height: 75px;
+    font-size: 5px;
+  }
+
+  .pcie-area {
+    right: 5px;
+    bottom: 35px;
+    left: 8px;
+  }
+
+  .sata-area {
+    right: 5px;
+    bottom: 5px;
+  }
+
+  .sata-ports span,
+  .sata-ports button {
+    font-size: 5px;
+  }
+
+  .board-label {
+    font-size: 7px;
+  }
+
+  .component-label {
+    font-size: 6px;
+  }
+
+  .case-cables {
+    right: 91px;
+  }
+
+  .part-card {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .part-icon {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .part-button {
+    padding: 7px;
+    font-size: 0.7rem;
+  }
+
+  .maintenance-panel,
+  .maintenance-completion {
+    padding: 13px;
+  }
+
+  .safety-sequence,
+  .reinstall-workflow,
+  .final-inspection {
+    grid-template-columns: 1fr;
+  }
+
+  .safety-visual {
+    min-height: 110px;
+  }
+
+  .cooler-model {
+    min-height: 145px;
+    gap: 8px;
+  }
+
+  .fan-frame {
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
+    border-width: 5px;
+  }
+
+  .fan-blades-static {
+    width: 55px;
+    height: 55px;
+    font-size: 2rem;
+  }
+
+  .heatsink-fins {
+    height: 100px;
+    gap: 2px;
+  }
+
+  .heatsink-fins i {
+    width: 6px;
+  }
+
+  .maintenance-results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .paste-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .direction-arrow {
+    flex-direction: column;
+    align-items: center;
+  }
+}
